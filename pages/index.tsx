@@ -5,7 +5,6 @@ import { Grid, Box, Card, CardContent, Typography, Button, TextField, Divider } 
 import partData from "../data/partData";
 import rankData from "../data/rankData";
 import predictData from "../data/predict";
-import { set } from "mongoose";
 
 const inter = Inter({ subsets: ["latin"] });
 
