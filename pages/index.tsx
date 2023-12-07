@@ -1,118 +1,107 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
+import React, { useState } from "react";
+import { Inter } from "next/font/google";
+import { Grid, Box, Card, CardContent, Typography, Button, TextField, Divider } from "@mui/material";
 
-const inter = Inter({ subsets: ['latin'] })
+import partData from "../data/partData";
+import rankData from "../data/rankData";
+import predictData from "../data/predict";
+import { set } from "mongoose";
+
+const inter = Inter({ subsets: ["latin"] });
+
+const statusMap: any = {
+    1: "Pahele Amritapuri region mei participate to karna tha bhai 😥",
+    2: "Sorry, you are not qualified for Amritapuri regionals 😔",
+    3: "🎊 Congrats, you are qualified for Amritapuri regionals",
+    4: "Itna to team bhi nhi tha bhai, kuch valid rank daalo 🤔",
+};
 
 export default function Home() {
-  return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">pages/index.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    const [rank, setRank] = useState(0);
+    const [status, setStatus] = useState(0);
+    const [team, setTeam] = useState("");
+    const [newrank, setNewrank] = useState(0);
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+    const predict = () => {
+        let teamName = rankData.filter((item) => item.rank === rank);
+        if (teamName.length === 0) {
+            setStatus(4);
+            setNewrank(0);
+            setTeam("");
+            return;
+        }
+        setTeam(`${teamName[0].team} - ${teamName[0].college}`);
+        let isParticipated = partData.filter((item) => item.team === teamName[0].team);
+        if (isParticipated.length === 0) {
+            setStatus(1);
+            setNewrank(0);
+            return;
+        }
+        let isQualified = predictData.filter((item) => item.rank === rank);
+        if (isQualified.length > 0) {
+            setStatus(3);
+            setNewrank(isQualified[0].newrank);
+            return;
+        }
+        setStatus(2);
+        setNewrank(0);
+    };
+    return (
+        <Grid container spacing={2} sx={{ fontFamily: inter, display: "flex", justifyContent: "center" }}>
+            <Grid item xs={11}>
+                <Card sx={{ mt: 5 }}>
+                    <CardContent>
+                        <Typography gutterBottom variant="subtitle1" component="div" fontWeight={700} mb={2}>
+                            Enter your ICPC 2023 preliminary rank
+                        </Typography>
+                        <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
+                            <TextField id="rank-input" label="Your Rank" size="small" variant="outlined" type="number" onChange={(e) => setRank(parseInt(e.target.value))} />
+                            <Button variant="outlined" sx={{ ml: 2 }} onClick={predict}>
+                                Predict
+                            </Button>
+                        </Box>
+                        {status > 0 && (
+                            <Typography
+                                variant="body2"
+                                sx={{
+                                    border: "2px dashed #93b1e9",
+                                    borderRadius: 5,
+                                    padding: 2,
+                                    backgroundColor: "#fafcff",
+                                }}
+                                component="div"
+                                mt={2}
+                            >
+                                <span style={{ fontWeight: 700 }}>Prediction: </span> {statusMap[status]}
+                                {newrank > 0 && <span style={{ fontWeight: 700 }}> - {newrank} / 250</span>}
+                                <br />
+                                {(status === 2 || status === 3 || status === 1) && <span style={{ fontSize: 12, color: "#555" }}>{team}</span>}
+                            </Typography>
+                        )}
+                        <Divider sx={{ mt: 3, mb: 2 }} />
+                        <Typography gutterBottom variant="subtitle2" component="div" fontWeight={700} mb={1}>
+                            Prediction based on Amritapuri 2023 selection criteria
+                        </Typography>
+                        <Box>
+                            <Typography variant="body2" component="div" mb={1}>
+                                • Teams ranked 1 to 10 are selected first.
+                            </Typography>
+                            <Typography variant="body2" component="div" mb={1}>
+                                • Teams ranked from 11, who solved at least 3 problems are invited with not more than 3 teams overall from the same institute.
+                            </Typography>
+                            <Typography variant="body2" component="div" mb={1}>
+                                • After that, the top team from each institute who solved at least one problem is invited until available slots are filled. If the top team is already selected from an institute, it is skipped.
+                            </Typography>
+                            <Typography variant="body2" component="div" mb={1}>
+                                • The remaining slots, if any, are filled according to rank order with a cap of max 3 overall from the same institute.
+                            </Typography>
+                            <Typography variant="body2" component="div" mb={1}>
+                                • Assuming 250 slots are available for Amritapuri regionals.
+                            </Typography>
+                        </Box>
+                    </CardContent>
+                </Card>
+            </Grid>
+        </Grid>
+    );
 }
