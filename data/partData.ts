@@ -298,7 +298,7 @@ const partData = [
     },
     {
      "no": 60,
-     "team": "Dudh Mehenga Hai",
+     "team": "Dudh Mehenga Hai_Dudh_Mehenga_Hai",
      "college": "DJ Sanghvi College of Engineering"
     },
     {
@@ -563,7 +563,7 @@ const partData = [
     },
     {
      "no": 113,
-     "team": "team",
+     "team": "Team Name",
      "college": "Indian Institute of Information Technology, Allahabad"
     },
     {
@@ -3223,7 +3223,7 @@ const partData = [
     },
     {
      "no": 645,
-     "team": "team kya hota hai",
+     "team": "team name kya hota hai",
      "college": "Indian Institute of Technology, Roorkee"
     },
     {
